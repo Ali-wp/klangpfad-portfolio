@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klangpfad — Projektportfolio · Ali Pilehvari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0f2018;
+    --bg-panel:#16301f;
+    --bg-panel-2:#1c3a25;
+    --accent-lime:#cfe36e;
+    --accent-lime-dim:#98ab5f;
+    --text-cream:#eef1e1;
+    --text-sage:#a3b899;
+    --hair:rgba(207,227,110,0.16);
+    --hair-strong:rgba(207,227,110,0.32);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--bg-deep);
+    color:var(--text-cream);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* faint topographic contour backdrop, echoes the trail map in the app */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 15% 20%, var(--hair) 0px, transparent 40%),
+      radial-gradient(circle at 85% 75%, var(--hair) 0px, transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{ max-width:960px; margin:0 auto; padding:0 28px; position:relative; z-index:1; }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:96px 0 64px; position:relative; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--accent-lime-dim);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:28px;
+  }
+  .eyebrow .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--accent-lime);
+    box-shadow:0 0 8px 1px var(--accent-lime);
+  }
+
+  h1.title{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-optical-sizing:auto;
+    font-size:clamp(48px, 9vw, 92px);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+    margin:0 0 6px;
+    color:var(--text-cream);
+  }
+  .title em{
+    font-style:italic;
+    color:var(--accent-lime);
+  }
+
+  .tagline{
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px;
+    letter-spacing:0.08em;
+    color:var(--text-sage);
+    margin:0 0 32px;
+  }
+
+  .lede{
+    font-size:19px;
+    line-height:1.6;
+    color:var(--text-cream);
+    max-width:560px;
+    margin:0 0 8px;
+    font-weight:300;
+  }
+  .lede strong{ color:var(--accent-lime); font-weight:500; }
+
+  /* trail line connecting the three "stations" below */
+  .trail-svg{ display:block; width:100%; height:auto; margin-top:56px; }
+  .trail-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    fill:var(--text-sage);
+    letter-spacing:0.05em;
+  }
+
+  /* ---------- SECTION shared ---------- */
+  section{ padding:64px 0; border-top:1px solid var(--hair); }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:36px; gap:16px; flex-wrap:wrap; }
+  .section-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--accent-lime-dim);
+    letter-spacing:0.1em;
+  }
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:32px;
+    margin:0;
+    color:var(--text-cream);
+  }
+
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:48px;
+  }
+  .about-grid p{
+    font-size:16px;
+    line-height:1.75;
+    color:var(--text-sage);
+    margin:0 0 18px;
+  }
+  .about-grid p strong{ color:var(--text-cream); font-weight:500; }
+
+  .facts{
+    background:var(--bg-panel);
+    border:1px solid var(--hair);
+    border-radius:4px;
+    padding:24px 26px;
+    align-self:start;
+  }
+  .fact-row{
+    display:flex; justify-content:space-between; gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--hair);
+    font-size:14px;
+  }
+  .fact-row:last-child{ border-bottom:none; }
+  .fact-label{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--text-sage);
+    letter-spacing:0.03em;
+  }
+  .fact-value{ color:var(--text-cream); text-align:right; }
+
+  /* ---------- STATIONS (screenshots as trail stops) ---------- */
+  .stations{ display:flex; flex-direction:column; gap:64px; }
+  .station{
+    display:grid;
+    grid-template-columns: 92px 1fr 300px;
+    gap:28px;
+    align-items:start;
+  }
+  .station-marker{
+    display:flex; flex-direction:column; align-items:center;
+    padding-top:6px;
+  }
+  .marker-dot{
+    width:44px; height:44px; border-radius:50%;
+    background:var(--bg-panel-2);
+    border:1px solid var(--hair-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--accent-lime);
+  }
+  .marker-line{
+    width:1px; flex:1;
+    background:linear-gradient(var(--hair-strong), transparent);
+    margin-top:8px;
+    min-height:40px;
+  }
+  .station:last-child .marker-line{ display:none; }
+
+  .station-text .stop-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--text-sage);
+    margin-bottom:8px;
+  }
+  .station-text h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:24px;
+    margin:0 0 12px;
+    color:var(--text-cream);
+  }
+  .station-text p{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--text-sage);
+    margin:0;
+    max-width:420px;
+  }
+
+  .station-shot{
+    position:relative;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--hair-strong);
+    box-shadow:0 24px 48px -20px rgba(0,0,0,0.6);
+    background:var(--bg-panel);
+  }
+  .station-shot img{ display:block; width:100%; height:auto; }
+
+  /* ---------- TECH STACK ---------- */
+  .stack-list{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    padding:9px 16px;
+    border-radius:999px;
+    border:1px solid var(--hair-strong);
+    color:var(--text-cream);
+    background:var(--bg-panel);
+  }
+  .chip.accent{ border-color:var(--accent-lime); color:var(--accent-lime); }
+
+  /* ---------- LINKS ---------- */
+  .link-cards{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .link-card{
+    display:block;
+    text-decoration:none;
+    background:var(--bg-panel);
+    border:1px solid var(--hair);
+    border-radius:8px;
+    padding:26px 24px;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .link-card:hover{ border-color:var(--accent-lime); transform:translateY(-2px); }
+  .link-card .lc-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--text-sage);
+    margin-bottom:10px;
+  }
+  .link-card .lc-title{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    color:var(--text-cream);
+    margin-bottom:6px;
+  }
+  .link-card .lc-arrow{ color:var(--accent-lime); font-family:'JetBrains Mono', monospace; font-size:13px; }
+
+  footer{
+    padding:48px 0 72px;
+    border-top:1px solid var(--hair);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+  }
+  footer .foot-name{ font-family:'Fraunces', serif; font-size:16px; color:var(--text-cream); }
+  footer .foot-meta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--text-sage);
+  }
+
+  @media (max-width: 760px){
+    .about-grid{ grid-template-columns:1fr; }
+    .station{ grid-template-columns:52px 1fr; }
+    .station-shot{ grid-column:1 / -1; max-width:280px; }
+    .marker-dot{ width:36px; height:36px; font-size:11px; }
+    .link-cards{ grid-template-columns:1fr; }
+    h1.title{ font-size:clamp(40px, 12vw, 64px); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .link-card{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;">
+    <div class="eyebrow"><span class="dot"></span> Studienprojekt · Bereich „Tun" · SS 2026</div>
+    <h1 class="title">Klang<em>pfad</em></h1>
+    <div class="tagline">GEH. HÖR. — ein ortsbezogener Audio-Guide</div>
+    <p class="lede">
+      Eine mobile Web-App, die Hörspiele <strong>am jeweiligen Handlungsort</strong> freischaltet —
+      Nutzer:innen bewegen sich entlang realer Wander- und Spazierrouten und hören die passende
+      Klangkulisse genau dort, wo sie entsteht.
+    </p>
+
+    <svg class="trail-svg" viewBox="0 0 900 90" preserveAspectRatio="xMinYMid meet">
+      <path d="M10,70 C 180,10 260,80 420,40 S 700,10 890,55" fill="none" stroke="var(--hair-strong)" stroke-width="1.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <circle cx="10" cy="70" r="5" fill="#cfe36e"/>
+      <circle cx="420" cy="40" r="5" fill="#cfe36e"/>
+      <circle cx="890" cy="55" r="5" fill="#cfe36e"/>
+      <text x="0" y="18" class="trail-label">KARTE</text>
+      <text x="392" y="70" class="trail-label">PLAYER</text>
+      <text x="828" y="35" class="trail-label">LOGIN</text>
+    </svg>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-head">
+      <h2>Über das Projekt</h2>
+      <span class="section-num">01 — ÜBERBLICK</span>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>
+          <strong>Klangpfad</strong> entstand im Auftrag von Kilian Zachhuber (USTP) im Rahmen der
+          Lehrveranstaltung „Tun/Forschen/Gründen". Ziel war eine App, die an der USTP produzierte
+          Hörspiele über einen integrierten Audioplayer wiedergibt — freigeschaltet über eine
+          interaktive Landkarte, sobald sich Nutzer:innen dem jeweiligen Handlungsort nähern.
+        </p>
+        <p>
+          Ich habe die App <strong>eigenständig konzipiert, entwickelt und umgesetzt</strong>: von der
+          Kartenansicht über die Standorterkennung bis zur ortsabhängigen Audiowiedergabe. Zusätzlich
+          zum ursprünglichen Briefing habe ich ein vollständiges Registrierungs-, Login- und
+          Logout-System ergänzt, um die App zu einem runden, eigenständigen Produkt zu machen.
+        </p>
+        <p>
+          Das Ergebnis ist ein stabiles, vollständig getestetes MVP mit responsivem Design für Mobile
+          und Desktop — live erreichbar über GitHub Pages.
+        </p>
+      </div>
+      <div class="facts">
+        <div class="fact-row"><span class="fact-label">AUFTRAGGEBER</span><span class="fact-value">Kilian Zachhuber, USTP</span></div>
+        <div class="fact-row"><span class="fact-label">ROLLE</span><span class="fact-value">Konzeption &amp; Entwicklung</span></div>
+        <div class="fact-row"><span class="fact-label">LAUFZEIT</span><span class="fact-value">März – August 2026</span></div>
+        <div class="fact-row"><span class="fact-label">STATUS</span><span class="fact-value">Abgeschlossen</span></div>
+        <div class="fact-row"><span class="fact-label">KLANGPUNKTE</span><span class="fact-value">10 Stationen · Wien &amp; St. Pölten</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATIONS / SCREENSHOTS -->
+  <section id="stations">
+    <div class="section-head">
+      <h2>Drei Stationen</h2>
+      <span class="section-num">02 — EINBLICKE</span>
+    </div>
+
+    <div class="stations">
+
+      <div class="station">
+        <div class="station-marker">
+          <div class="marker-dot">1</div>
+          <div class="marker-line"></div>
+        </div>
+        <div class="station-text">
+          <div class="stop-eyebrow">Kartenansicht</div>
+          <h3>Wo die Klänge warten</h3>
+          <p>
+            Eine vollflächige Karte (Leaflet / OpenStreetMap) zeigt alle Klangpunkte entlang der
+            Routen in Wien und St. Pölten. Jede Markierung ist eine hörbare Station.
+          </p>
+        </div>
+        <div class="station-shot"><img src="images/klangpfad-map.jpg" alt="Kartenansicht der Klangpfad-App mit Klangpunkten in Wien und St. Pölten" loading="lazy"></div>
+      </div>
+
+      <div class="station">
+        <div class="station-marker">
+          <div class="marker-dot">2</div>
+          <div class="marker-line"></div>
+        </div>
+        <div class="station-text">
+          <div class="stop-eyebrow">Audioplayer</div>
+          <h3>Das Hörspiel am Ort</h3>
+          <p>
+            Tippt man eine Station an, startet die passende Klangkulisse — hier am Landesmuseum
+            Niederösterreich — direkt im integrierten Player, mit Fortschrittsanzeige und Steuerung.
+          </p>
+        </div>
+        <div class="station-shot"><img src="images/klangpfad-player.jpg" alt="Audioplayer-Ansicht der Klangpfad-App mit laufendem Hörspiel am Landesmuseum NÖ" loading="lazy"></div>
+      </div>
+
+      <div class="station">
+        <div class="station-marker">
+          <div class="marker-dot">3</div>
+        </div>
+        <div class="station-text">
+          <div class="stop-eyebrow">Zugang</div>
+          <h3>Registrierung &amp; Login</h3>
+          <p>
+            Eine eigenständige Erweiterung über das ursprüngliche Briefing hinaus: Nutzer:innen
+            können sich registrieren und anmelden, um ihren Fortschritt entlang des Klangpfads
+            zu behalten.
+          </p>
+        </div>
+        <div class="station-shot"><img src="images/klangpfad-login.jpg" alt="Login- und Registrierungsseite der Klangpfad-App" loading="lazy"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="stack">
+    <div class="section-head">
+      <h2>Technischer Unterbau</h2>
+      <span class="section-num">03 — STACK</span>
+    </div>
+    <div class="stack-list">
+      <span class="chip accent">React 18</span>
+      <span class="chip">Vite 5</span>
+      <span class="chip">Leaflet + react-leaflet</span>
+      <span class="chip">Web Audio API</span>
+      <span class="chip">Geolokalisierung</span>
+      <span class="chip">Responsive Design</span>
+      <span class="chip">GitHub Actions (CI/CD)</span>
+      <span class="chip">GitHub Pages Hosting</span>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section id="links">
+    <div class="section-head">
+      <h2>Weiterführen</h2>
+      <span class="section-num">04 — LINKS</span>
+    </div>
+    <div class="link-cards">
+      <a class="link-card" href="https://ali-wp.github.io/klangpfad/" target="_blank" rel="noopener">
+        <div class="lc-label">Live-Demo</div>
+        <div class="lc-title">Klangpfad ausprobieren</div>
+        <div class="lc-arrow">ali-wp.github.io/klangpfad →</div>
+      </a>
+      <a class="link-card" href="https://github.com/Ali-wp/klangpfad" target="_blank" rel="noopener">
+        <div class="lc-label">Quellcode</div>
+        <div class="lc-title">Repository ansehen</div>
+        <div class="lc-arrow">github.com/Ali-wp/klangpfad →</div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <div class="foot-name">Ali Pilehvari</div>
+      <div class="foot-meta">MA Interactive Technologies · USTP</div>
+    </div>
+    <div class="foot-meta">Projektdatenblatt TFG · SS 2026</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
